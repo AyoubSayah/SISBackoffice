@@ -1,0 +1,111 @@
+<div class="mat-elevation-z8 tab-container">
+
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8 .table-container ">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by id">
+                ID
+            </th>
+            <td class="td-width" mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="sujet">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by sujet">
+                Sujet
+            </th>
+            <td class="td-width" mat-cell *matCellDef="let element"> {{element.sujet}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by description">
+                Description
+            </th>
+            <td class="td-width" mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by type">
+                Type
+            </th>
+            <td class="td-width" mat-cell *matCellDef="let element"> <span *ngIf="element.type">{{element.type}}</span> </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="technologie">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by technologie">
+                Technologie
+            </th>
+            <td class="td-width" mat-cell *matCellDef="let element">{{element.technologie}} </td>
+        </ng-container>
+        <ng-container matColumnDef="proposepar">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by proposepar">
+                Proposé par
+            </th>
+            <td class="td-width" mat-cell *matCellDef="let element"> {{element.proposepar}} </td>
+        </ng-container>
+        <ng-container matColumnDef="departement">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by departement">
+                Département
+            </th>
+            <td class="td-width" mat-cell *matCellDef="let element"> {{element.departement}} </td>
+        </ng-container>
+        <ng-container matColumnDef="niveau">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by niveau">
+                Niveau
+            </th>
+            <td class="td-width" mat-cell *matCellDef="let element"><span *ngIf="element.niveau">{{element.niveau}} </span> </td>
+        </ng-container>
+        <ng-container matColumnDef="statut">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by statut">
+                Statut
+            </th>
+            <td class="td-width" mat-cell *matCellDef="let element"> {{convertStatus(element.statut)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element" class="action-link">
+
+                <div fxLayout="row">
+                    <button (click)="showItem(element.id)" mat-icon-button color="primary">
+    <mat-icon title="Confirmer">visibility</mat-icon>
+  </button>
+
+
+                    <button (click)="editItem(element.id)" [disabled]="hasAccess(element.id) || element.statut===subjectStatus.CANCELED" mat-icon-button color="primary">
+          <mat-icon title="Modifier">edit</mat-icon>
+        </button>
+
+                    <!-- <button (click)="historyItem(element.id)" mat-icon-button color="primary">
+          <mat-icon title="History">history</mat-icon>
+        </button> -->
+
+                    <button [disabled]="hasAccess(element.id)  || element.statut===subjectStatus.CANCELED" (click)="annulerItem(element.id)" mat-icon-button color="primary">
+          <mat-icon title="Annuler">clear</mat-icon>
+        </button>
+
+                    <button mat-icon-button [disabled]="hasAccess(element.id)  || element.statut===subjectStatus.CANCELED|| element.statut===subjectStatus.VALID|| element.statut===subjectStatus.CONFIRMED" color="primary" (click)="verifyItem(element.id)">
+          <mat-icon title="Valider">done</mat-icon>
+        </button>
+                    <button (click)="confirmItem(element.id)" [disabled]="hasManagerAccess(element.id)  || element.statut===subjectStatus.CANCELED|| element.statut===subjectStatus.CONFIRMED" mat-icon-button color="primary">
+          <mat-icon title="Confirmer">done_all</mat-icon>
+        </button>
+
+
+                    <button (click)="removeItem(element.id)" [disabled]="hasAccess(element.id) " mat-icon-button color="warn">
+          <mat-icon title="Supprimer">delete</mat-icon>
+        </button>
+
+
+                </div>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+</div>

@@ -1,0 +1,67 @@
+<h2 mat-dialog-title>
+    {{subjectConstants.EDIT_SUBJECT}}</h2>
+<form [formGroup]="editSubjectForm" (ngSubmit)="ajouter($event)">
+    <mat-dialog-content class="mat-typography">
+
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>{{subjectConstants.SUBJECT_TITLE}} </mat-label>
+            <input formControlName="title" matInput type="text">
+            <mat-error *ngIf="titleError()==='required'">
+
+                {{addsubjectErrors.TITLE_REQUIRED_ERROR}}
+            </mat-error>
+            <mat-error *ngIf="titleError()==='minlength'">
+                {{addsubjectErrors.TITLE_MIN_LENGTH_ERROR}}
+            </mat-error>
+            <mat-error *ngIf="titleError()==='maxlength'">
+                {{addsubjectErrors.TITLE_MAX_LENGTH_ERROR}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>{{subjectConstants.SUBJECT_DESCRIPTION}}</mat-label>
+            <textarea formControlName="description" matInput></textarea>
+            <mat-error *ngIf="descriptionError()==='required'">
+                {{addsubjectErrors.DESCRIPTION_REQUIRED_ERROR}}
+            </mat-error>
+            <mat-error *ngIf="descriptionError()==='minlength'">
+                {{addsubjectErrors.DESCRIPTION_MIN_LENGTH_ERROR}}
+            </mat-error>
+            <mat-error *ngIf="descriptionError()==='maxlength'">
+                {{addsubjectErrors.DESCRIPTION_MAX_LENGTH_ERROR}}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>{{subjectConstants.SUBJECT_TYPE}}</mat-label>
+            <mat-select formControlName="type">
+                <mat-option>{{subjectConstants.SUBJECT_NONE_CHOICE}}</mat-option>
+                <mat-option *ngFor='let type of types$ | async' [value]="type.typeId">{{type.typeName}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>{{subjectConstants.SUBJECT_TECHNOLOGYS}}</mat-label>
+            <mat-select formControlName="technology" (openedChange)="comboChange($event)" multiple>
+                <mat-option *ngFor='let technology of technologys$ | async' [value]="technology.technologyId">{{technology.technologyName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>{{subjectConstants.SUBJECT_LEVELS}}</mat-label>
+            <mat-select formControlName="level">
+                <mat-option>{{subjectConstants.SUBJECT_NONE_CHOICE}}</mat-option>
+                <mat-option *ngFor='let level of level$ | async' [value]="level.levelId">{{level.levelName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+
+
+
+
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>{{subjectConstants.SUBJECT_CANCEL}}</button>
+        <button mat-raised-button color="primary" cdkFocusInitial>{{subjectConstants.SUBJECT_EDIT}}</button>
+    </mat-dialog-actions>
+</form>

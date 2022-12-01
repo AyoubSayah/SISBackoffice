@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>{{subjectConstants.CANCEL_SUBJECT}}</h2>
+<mat-dialog-content class="mat-typography">
+
+    <app-subject-details [subjectDetails]="subject"></app-subject-details>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+
+
+    <button mat-raised-button color="warn" mat-dialog-close (click)="cancelSubject()" cdkFocusInitial>{{subjectConstants.SUBJECT_CANCEL}}</button>
+</mat-dialog-actions>

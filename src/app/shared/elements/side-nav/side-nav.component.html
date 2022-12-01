@@ -1,0 +1,39 @@
+<mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation">
+        <mat-nav-list *ngIf="!(isAuthentificated )">
+            <a mat-list-item routerLink="" (click)="sidenav.close()">
+                <mat-icon>login</mat-icon><span class="nav-caption">Connexion</span>
+            </a>
+        </mat-nav-list>
+        <mat-nav-list *ngIf="isAuthentificated " (click)="onLogout($event)" mat-list-item (click)="sidenav.close()">
+
+            <mat-icon>logout</mat-icon><span class="nav-caption">Déconnexion</span>
+
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <div>
+
+                <button mat-icon-button (click)="sidenav.toggle()">
+              <mat-icon >menu</mat-icon>
+          </button></div>
+            <div>
+
+                <img class="medium" src="../assets/icons/prx-icon.svg" alt="">
+            </div>
+            <div fxFlex fxLayout fxLayoutAlign="flex-end">
+                <ul *ngIf="!(isAuthentificated )" fxLayout fxLayoutGap="10px" class="navigation-items">
+                    <li> <a routerLink="">Connexion</a></li>
+                </ul>
+                <ul *ngIf="isAuthentificated" fxLayout fxLayoutGap="10px" class="navigation-items">
+                    <li><a (click)="onLogout($event)" routerLink="">Déconnexion</a></li>
+                </ul>
+
+            </div>
+        </mat-toolbar>
+        <main>
+            <ng-content></ng-content>
+        </main>
+    </mat-sidenav-content>
+</mat-sidenav-container>

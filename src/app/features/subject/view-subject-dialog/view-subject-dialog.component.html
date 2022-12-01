@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>{{subjectConstants.SUBJECT_DETAILS}}</h2>
+<mat-dialog-content class="mat-typography">
+
+    <app-subject-details [subjectDetails]="subject"></app-subject-details>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>{{subjectConstants.SUBJECT_DONE}}</button>
+</mat-dialog-actions>

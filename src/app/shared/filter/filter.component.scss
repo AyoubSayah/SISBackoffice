@@ -1,0 +1,41 @@
+.example-additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+}
+
+.mat-list-item {
+    background: tomato;
+    margin: 5px;
+    border-radius: 8px;
+}
+
+.mat-list-item:hover {
+    background: rgba(0, 0, 0, .54);
+    cursor: pointer;
+    transform: scale(1.01);
+}
+
+.happy {
+    background: orange;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 350px !important;
+}
+
+.happy-other {
+    background: cyan;
+    height: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 100px !important;
+}
+
+.large-padding {
+    height: 300px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+}

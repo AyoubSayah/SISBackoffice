@@ -1,0 +1,46 @@
+<section>
+
+    <mat-card class="example-card container">
+        <mat-card-header class="center-button">
+            <mat-card-title>
+                <button (click)="addSubject()" mat-raised-button color="primary">{{subjectConstants.ADD_SUBJECT}}</button>
+            </mat-card-title>
+
+
+        </mat-card-header>
+        <mat-card-content>
+            <mat-card>
+
+
+                <mat-form-field appearance="legacy" class="serch-width">
+                    <mat-label>{{subjectConstants.SEARCH_SUBJECT}}</mat-label>
+                    <input [(ngModel)]="search" class="inputCustom" matInput [placeholder]=subjectConstants.SEARCH_SUBJECT>
+
+                </mat-form-field>
+
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{ subjectConstants.FILTERS }}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{panelOpenState ? subjectConstants.INVISIBLE_FILTER : subjectConstants.VISIBLE_FILTER}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <app-filter></app-filter>
+                </mat-expansion-panel>
+            </mat-card>
+            <mat-card *ngIf="!(showLoading$ | async)">
+                <app-table [search]="search" (subjectEvent)="openDialog($event)"></app-table>
+            </mat-card>
+            <div style="width: 100%;height: 100%;">
+                <div *ngIf="showLoading$ | async" class="spinner">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </div>
+
+        </mat-card-content>
+
+    </mat-card>
+</section>

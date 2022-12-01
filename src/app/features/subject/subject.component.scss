@@ -1,0 +1,54 @@
+.example-card {
+    width: 90%;
+    margin: auto auto;
+    top: 25%;
+    min-height: 100vh;
+}
+
+.mat-card-title {
+    font-size: 16px;
+}
+
+.example-full-width {
+    width: 100%;
+}
+
+section {
+    padding: 25px;
+}
+
+.center-button {
+    padding-left: 45%;
+    padding-right: 45%;
+}
+
+#myInput {
+    background-image: url('/assets/searchicon.png');
+    background-position: 10px 10px;
+    padding-right: 0px;
+    background-repeat: no-repeat;
+    font-size: 16px;
+    padding: 12px 40px 12px 40px;
+    margin-bottom: 12px;
+    border: 0;
+    outline: none;
+    width: 20rem;
+}
+
+.inputCustom {
+    padding-right: 0px;
+    background: url('/assets/images/searchicon.png') no-repeat right;
+    background-size: 18px;
+    padding-top: 10px;
+}
+
+.serch-width {
+    width: 100%;
+}
+
+.spinner {
+    position: relative;
+    left: 50%;
+    margin-left: -4em;
+    top: 200px;
+}

@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>{{subjectConstants.VERIFY_SUBJECT}}</h2>
+<mat-dialog-content class="mat-typography">
+
+    <app-subject-details [subjectDetails]="subject"></app-subject-details>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+
+    <button mat-button mat-dialog-close>{{subjectConstants.SUBJECT_CANCEL}}</button>
+    <button mat-raised-button color="primary" (click)="verify()" mat-dialog-close cdkFocusInitial>{{subjectConstants.SUBJECT_VERIFY}}</button>
+</mat-dialog-actions>

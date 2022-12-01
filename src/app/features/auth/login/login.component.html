@@ -1,0 +1,77 @@
+<main>
+    <div></div>
+    <mat-card class="example-card">
+        <mat-card-header>
+            <mat-card-title>
+                <!-- <mat-icon>person</mat-icon> -->
+                {{loginConstants.TITLE}}
+            </mat-card-title>
+
+
+
+        </mat-card-header>
+        <div *ngIf="showErrorMessage$ | async" class="alert alert-danger">
+            {{showErrorMessage$ | async}}
+        </div>
+        <form [formGroup]="authForm" (ngSubmit)="login()" class="example-form">
+            <mat-card-content *ngIf="showLoading$ | async" class="spinner">
+                <mat-spinner></mat-spinner>
+            </mat-card-content>
+
+            <mat-card-content *ngIf="!(showLoading$ | async)">
+
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>{{loginConstants.USERNAME_LABEL}}</mat-label>
+                                <input formControlName="username" matInput type="text">
+
+
+                                <mat-error *ngIf="usernameError()==='required'">
+                                    {{loginConstants.USERNAME_REQUIRED_ERROR}}
+                                </mat-error>
+                                <mat-error *ngIf="usernameError()==='minlength'">
+                                    {{loginConstants.USERNAME_MIN_LENGTH_ERROR}}
+                                </mat-error>
+                                <mat-error *ngIf="usernameError()==='maxlength'">
+                                    {{loginConstants.USERNAME_MAX_LENGTH_ERROR}}
+                                </mat-error>
+
+                            </mat-form-field>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>{{loginConstants.PASSWORD_LABEL}}</mat-label>
+                                <input formControlName="password" matInput [type]="hide ? 'password' : 'text'">
+                                <mat-error *ngIf="passwordError()==='required'">
+                                    {{loginConstants.PASSWORD_REQUIRED_ERROR}}
+                                </mat-error>
+                                <mat-error *ngIf="passwordError()==='minlength'">
+                                    {{loginConstants.PASSWORD_MIN_LENGTH_ERROR}}
+                                </mat-error>
+                                <mat-error *ngIf="passwordError()==='maxlength'">
+                                    {{loginConstants.PASSWORD_MAX_LENGTH_ERROR}}
+                                </mat-error>
+                                <button mat-icon-button matSuffix type="button" (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
+
+                <mat-card-actions fxLayout fxLayoutAlign="flex-end">
+                    <button type="submit" mat-raised-button routerLink="/" color="primary">{{loginConstants.TITLE}}</button>
+                </mat-card-actions>
+
+            </mat-card-content>
+
+        </form>
+
+    </mat-card>
+
+</main>

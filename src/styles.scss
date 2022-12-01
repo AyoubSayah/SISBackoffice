@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+    font-family: Roboto, sans-serif;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+}
+
+main {
+    background: url('/assets/icons/overlay_stars.svg') left top repeat, linear-gradient(to right bottom, #683cb4, #4b32a7);
+    background-size: 400px, auto;
+    color: var(--white);
+    font-family: Space Mono, monospace;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.snack {
+    background-color: #683cb4;
+    color: #ffff;
+}
+
+.error {
+    background-color: #da0505;
+    color: #ffff;
+}

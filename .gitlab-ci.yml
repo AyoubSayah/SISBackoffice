@@ -1,0 +1,152 @@
+image: gitlab-registry.proxym-group.net/docker/node:16.13.2
+
+stages:
+  - code_review
+
+  - build_project_dev
+  - build_project_qa
+  #- build_project_prod
+  
+  - docker_build_dev
+  - docker_build_qa
+  #- docker_build_prod
+
+  - k8s_deploy_dev
+  - k8s_deploy_qa
+  #- k8s_deploy_prod
+
+
+code_review_job:
+  stage: code_review
+  tags:
+    - docker
+  script:
+    - sonar-scanner -Dsonar.host.url="${SONAR_HOST_URL}" -Dsonar.login="${SONAR_LOGIN_TOKEN}" -Dsonar.projectKey="${SONAR_PROJECT_KEY}" -Dsonar.projectName="${SONAR_PROJECT_NAME}" -Dsonar.projectVersion="${CI_COMMIT_REF_NAME}" -Dsonar.sources="src"
+  only:
+    - develop
+    - /^feature\/.+$/
+    - release/qa
+
+build_project_dev_job:
+  stage: build_project_dev
+  tags:
+    - docker
+  script:
+    - sh build_script.sh
+  artifacts:
+    untracked: false
+    paths:
+      - dist/
+      - ./Dockerfile
+      - ./nginx.conf
+      - ./values_dev.yml
+  only:
+    - develop
+
+docker_build_dev_job:
+  stage: docker_build_dev
+  tags:
+    - docker
+  variables:
+    GIT_STRATEGY: none
+    TAG: dev
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  before_script:
+    -  echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+  script:
+    - /kaniko/executor --context $CI_PROJECT_DIR --single-snapshot --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:$TAG
+  dependencies:
+    - build_project_dev_job
+  artifacts:
+    paths:
+      - ./values_dev.yml
+  only:
+    - develop
+
+
+build_project_qa_job:
+  stage: build_project_qa
+  tags:
+    - docker
+  script:
+    - sh build_script.sh
+  artifacts:
+    untracked: false
+    paths:
+      - dist/
+      - ./Dockerfile
+      - ./nginx.conf
+      - ./values_qa.yml
+  only:
+    - release/qa
+
+
+docker_build_qa_job:
+  stage: docker_build_qa
+  tags:
+    - docker
+  variables:
+    GIT_STRATEGY: none
+    TAG: qa
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  before_script:
+    -  echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+  script:
+    - /kaniko/executor --context $CI_PROJECT_DIR --single-snapshot --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:$TAG
+  dependencies:
+    - build_project_qa_job
+  artifacts:
+    paths:
+      - ./values_qa.yml
+  only:
+    - release/qa
+
+
+k8s_deploy_dev_job:
+   stage: k8s_deploy_dev
+   tags:
+     - docker
+   variables:
+    GIT_STRATEGY: none
+    ENV: dev
+   image: gitlab-registry.proxym-group.net/docker/helm:3
+   before_script:
+    - kubectl config set-cluster k8s --server="${K8S_SERVER}"
+    - kubectl config set clusters.k8s.certificate-authority-data ${K8S_CA_DATA}
+    - kubectl config set-credentials gitlab --token="${K8S_USER_TOKEN}"
+    - kubectl config set-context default --cluster=k8s --user=gitlab --namespace=${K8S_NAMESPACE}
+    - kubectl config use-context default
+   script:
+    - helm repo add ${HELM_REPO} ${HELM_REPO_URL} --username ${HELM_USERNAME} --password ${HELM_PASSWORD}
+    - helm upgrade --install  bss-front-$ENV --version 0.3.1 -f values_dev.yml proxym/angular
+   dependencies: 
+    - docker_build_dev_job
+   only:
+     - develop
+
+
+k8s_deploy_qa_job:
+  stage: k8s_deploy_qa
+  tags:
+    - docker
+  variables:
+    GIT_STRATEGY: none
+    ENV: qa
+  image: gitlab-registry.proxym-group.net/docker/helm:3
+  before_script:
+    - kubectl config set-cluster k8s --server="${K8S_SERVER}"
+    - kubectl config set clusters.k8s.certificate-authority-data ${K8S_CA_DATA}
+    - kubectl config set-credentials gitlab --token="${K8S_USER_TOKEN}"
+    - kubectl config set-context default --cluster=k8s --user=gitlab --namespace=${K8S_NAMESPACE}
+    - kubectl config use-context default
+  script:
+    - helm repo add ${HELM_REPO} ${HELM_REPO_URL} --username ${HELM_USERNAME} --password ${HELM_PASSWORD}
+    - helm upgrade --install  bss-front-$ENV --version 0.3.1 -f values_qa.yml proxym/angular
+  dependencies: 
+    - docker_build_qa_job
+  only:
+    - release/qa

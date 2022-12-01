@@ -1,0 +1,42 @@
+<form [formGroup]="filterForm" (ngSubmit)="filter($event)">
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20" fxLayoutAlign="start none">
+        <mat-form-field appearance="fill">
+            <mat-label>{{subjectConstants.SUBJECT_TYPE}}</mat-label>
+            <mat-select formControlName="type">
+                <mat-option>{{subjectConstants.SUBJECT_NONE_CHOICE}}</mat-option>
+                <mat-option *ngFor='let type of types$ | async' [value]="type.typeId">{{type.typeName}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>{{subjectConstants.SUBJECT_TECHNOLOGYS}}</mat-label>
+            <mat-select formControlName="technology" (openedChange)="comboChange($event)" multiple>
+                <mat-option *ngFor='let technology of technologys$ | async' [value]="technology.technologyId">{{technology.technologyName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>{{subjectConstants.SUBJECT_DEPARTMENTS}}</mat-label>
+            <mat-select formControlName="department">
+                <mat-option>{{subjectConstants.SUBJECT_NONE_CHOICE}}</mat-option>
+                <mat-option *ngFor='let department of departments$ | async' [value]="department.departmentId">{{department.departmentName}} </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>{{subjectConstants.SUBJECT_LEVELS}}</mat-label>
+            <mat-select formControlName="level">
+                <mat-option>{{subjectConstants.SUBJECT_NONE_CHOICE}}</mat-option>
+                <mat-option *ngFor='let level of level$ | async' [value]="level.levelId">{{level.levelName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Proposé par</mat-label>
+            <input type="text" formControlName="person" matInput [matAutocomplete]="auto">
+            <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
+                <mat-option *ngFor='let person of persons$ | async' [value]="person">{{person.fullName}}</mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20" fxLayoutAlign="end none">
+        <button mat-stroked-button (click)="cancel()" color="primary">{{subjectConstants.SUBJECT_CANCEL}}</button>
+        <button mat-raised-button color="primary">{{subjectConstants.FILTER}}</button>
+    </div>
+</form>

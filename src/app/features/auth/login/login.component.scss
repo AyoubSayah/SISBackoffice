@@ -1,0 +1,60 @@
+.example-card {
+    width: 350px;
+    margin: auto auto;
+    top: 25%;
+}
+
+.mat-card-title {
+    font-size: 16px;
+}
+
+.example-full-width {
+    width: 100%;
+}
+
+main {
+    background: url('/assets/icons/overlay_stars.svg') left top repeat, linear-gradient(to right bottom, #683cb4, #4b32a7);
+    background-size: 400px, auto;
+    color: var(--white);
+    font-family: Space Mono, monospace;
+    height: 100vh;
+    width: 100%;
+}
+
+.example-right-align {
+    text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+    display: none;
+}
+
+input.example-right-align {
+    -moz-appearance: textfield;
+}
+
+.spinner {
+    position: relative;
+    top: 20px;
+    left: 35%;
+}
+
+mat-card-content {
+    height: 200px;
+}
+
+.alert {
+    width: 100%;
+    padding: 5px;
+    color: white;
+    margin-bottom: 15px;
+    text-align: center;
+    border-radius: 10px;
+    display: block;
+}
+
+.alert-danger {
+    background-color: #C62828;
+    /* Red */
+}
