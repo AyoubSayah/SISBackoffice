@@ -47,8 +47,6 @@ export class SubjectComponent implements OnInit {
     this.showLoading$ = this.store.select(getLoading);
   }
   openDialog = (e: { action: string, subjectID?: number; }): void => {
-
-
     switch (e.action) {
       case '[EDIT]':
         this.dialog.open(EditSubjectDialogComponent, { data: e.subjectID, minWidth: '300px', maxWidth: '500px' });
@@ -71,10 +69,7 @@ export class SubjectComponent implements OnInit {
       case '[CANCELED]':
         this.dialog.open(CancelSubejectDialogComponent, { data: e.subjectID, minWidth: '300px', maxWidth: '500px' });
         break;
-
-
     }
-
   };
 
   addSubject = () => {
@@ -82,6 +77,5 @@ export class SubjectComponent implements OnInit {
   };
   change(e: any) {
     console.log(e.target.value);
-
   }
 }

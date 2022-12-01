@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import {map, Observable, of} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Department } from './models/department.model';
 import { Level } from './models/level.model';
@@ -10,6 +10,7 @@ import { Subject } from './models/subject.model';
 import { Technology } from './models/technologie.model';
 import { Type } from './models/type.model';
 import { ADD_SUBJECTS_ROUTE, DEPARTMENTS_ROUTE, EDIT_SUBJECTS_ROUTE, LEVELS_ROUTE, PERSONS_ROUTE, REMOVE_SUBJECTS_ROUTE, STATUS_SUBJECTS_ROUTE, SUBJECTS_ROUTE, TECHNOLOYS_ROUTE, TYPES_ROUTE } from './RoutesApi/subject.routes';
+import {Role} from "./models/role.model";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,146 @@ export class SubjectsService {
 
   constructor(private http: HttpClient) { }
   getSubjects = () => {
-    return this.http.post<Subject[]>(`${environment.baseUrl}${SUBJECTS_ROUTE}`, {}).pipe(
+    return of([{
+      subjectId: 0,
+      title: 'subject 1',
+      description: 'subject description 1',
+      technologies: [{
+        technologyId: 1,
+        technologyName: 'tech 1'
+      }],
+      level: {
+        levelId: 1,
+        levelName: 'level 1'
+      },
+      type: {
+        typeId: 1,
+        typeName: 'type 1'
+      },
+      postedBy: {
+        personId: 1,
+        username: 'user 1',
+        firstName: 'user firstName',
+        lastName: 'user lastName',
+        fullName: 'user fullName',
+        gender: 'M',
+        hasPermission: true,
+        role: {
+          roleId: 1,
+          roleName: 'role 1'
+        },
+        department: {
+          departmentId: 1,
+          departmentName: 'departmentName'
+        }
+      },
+      subjectState: 'subjectState',
+    },
+      {
+        subjectId: 1,
+        title: 'subject 2',
+        description: 'subject description 2',
+        technologies: [{
+          technologyId: 2,
+          technologyName: 'tech 2'
+        }],
+        level: {
+          levelId: 2,
+          levelName: 'level 2'
+        },
+        type: {
+          typeId: 2,
+          typeName: 'type 2'
+        },
+        postedBy: {
+          personId: 2,
+          username: 'user 2',
+          firstName: 'user firstName',
+          lastName: 'user lastName',
+          fullName: 'user fullName',
+          gender: 'M',
+          hasPermission: true,
+          role: {
+            roleId: 2,
+            roleName: 'role 2'
+          },
+          department: {
+            departmentId: 2,
+            departmentName: 'departmentName'
+          }
+        },
+        subjectState: 'subjectState',
+      },
+      {
+        subjectId: 2,
+        title: 'subject 3',
+        description: 'subject description 3',
+        technologies: [{
+          technologyId: 3,
+          technologyName: 'tech 3'
+        }],
+        level: {
+          levelId: 3,
+          levelName: 'level 3'
+        },
+        type: {
+          typeId: 3,
+          typeName: 'type 3'
+        },
+        postedBy: {
+          personId: 3,
+          username: 'user 3',
+          firstName: 'user firstName',
+          lastName: 'user lastName',
+          fullName: 'user fullName',
+          gender: 'M',
+          hasPermission: true,
+          role: {
+            roleId: 3,
+            roleName: 'role 3'
+          },
+          department: {
+            departmentId: 3,
+            departmentName: 'departmentName'
+          }
+        },
+        subjectState: 'subjectState',
+      },
+      {
+        subjectId: 3,
+        title: 'subject 4',
+        description: 'subject description 4',
+        technologies: [{
+          technologyId: 4,
+          technologyName: 'tech 4'
+        }],
+        level: {
+          levelId: 4,
+          levelName: 'level 4'
+        },
+        type: {
+          typeId: 4,
+          typeName: 'type 4'
+        },
+        postedBy: {
+          personId: 4,
+          username: 'user 4',
+          firstName: 'user firstName',
+          lastName: 'user lastName',
+          fullName: 'user fullName',
+          gender: 'M',
+          hasPermission: true,
+          role: {
+            roleId: 4,
+            roleName: 'role 4'
+          },
+          department: {
+            departmentId: 4,
+            departmentName: 'departmentName'
+          }
+        },
+        subjectState: 'subjectState',
+      },]).pipe(
       map((data) => {
         const subjects: Subject[] = [];
         for (let key in data) {

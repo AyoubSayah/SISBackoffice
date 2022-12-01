@@ -8,7 +8,6 @@ const routes: Routes = [{
   // canActivate: [SubjectsGuard]
 }, {
   path: 'subjects', loadChildren: () => import('./features/subject/subject.module').then(m => m.SubjectModule),
-  canActivate: [AuthGuard]
 },
 
 { path: '404', component: NotFoundComponent },
