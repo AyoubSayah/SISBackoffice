@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-
+@use '@angular/material' as mat;
 html,
 body {
     height: 100%;
@@ -12,7 +12,7 @@ body {
 }
 
 main {
-    background: url('/assets/icons/overlay_stars.svg') left top repeat, linear-gradient(to right bottom, #683cb4, #4b32a7);
+    background: url('/assets/icons/overlay_stars.svg') left top repeat, linear-gradient(to right bottom, #35bec4, #fdfdfe);
     background-size: 400px, auto;
     color: var(--white);
     font-family: Space Mono, monospace;
@@ -28,4 +28,19 @@ main {
 .error {
     background-color: #da0505;
     color: #ffff;
+}
+.mat-toolbar.mat-primary{
+  background: rgb(97, 202, 208) !important;
+}
+.mat-raised-button.mat-primary{
+  background: rgb(97, 202, 208) !important;
+}
+.mat-icon-button.mat-primary:not([disabled]){
+  color: rgb(97, 202, 208) !important;
+}
+.mat-stroked-button.mat-primary{
+  color: rgb(97, 202, 208) !important;
+}
+.icon{
+  max-width: 116px;
 }
